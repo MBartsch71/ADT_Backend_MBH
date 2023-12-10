@@ -45,7 +45,9 @@ CLASS lcl_abapgit_provider IMPLEMENTATION.
 
     "Set the default transport request
     IF is_request_data-transportrequest IS NOT INITIAL.
-      zcl_abapgit_default_transport=>get_instance( )->set( CONV #( is_request_data-transportrequest ) ).
+      DATA(transport) = NEW zcl_abapgit_default_transport( ).
+      transport->zif_abapgit_default_transport~set( CONV #( is_request_data-transportrequest ) ).
+*      zcl_abapgit_default_transport=>get_instance( )->set( CONV #( is_request_data-transportrequest ) ).
     ENDIF.
 
     "Create online repo
