@@ -21,7 +21,7 @@ CLASS zcl_abapgit_res_repo_pull DEFINITION
     TYPES:
       BEGIN OF ty_repo_w_links.
         INCLUDE TYPE zif_abapgit_persistence=>ty_repo.
-    TYPES:   links TYPE if_atom_types=>link_t.
+    TYPES: links TYPE if_atom_types=>link_t.
     TYPES: END OF ty_repo_w_links.
     TYPES:
       tt_repo_w_links TYPE STANDARD TABLE OF ty_repo_w_links WITH DEFAULT KEY.
@@ -54,7 +54,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_ABAPGIT_RES_REPO_PULL IMPLEMENTATION.
+CLASS zcl_abapgit_res_repo_pull IMPLEMENTATION.
 
 
   METHOD post.
@@ -144,7 +144,9 @@ CLASS ZCL_ABAPGIT_RES_REPO_PULL IMPLEMENTATION.
 
 *------ Set the default transport request
         IF ls_request_data-transportrequest <> ''.
-          zcl_abapgit_default_transport=>get_instance( )->set( CONV #( ls_request_data-transportrequest ) ).
+          DATA(transport) = NEW zcl_abapgit_default_transport( ).
+          transport->zif_abapgit_default_transport~set( CONV #( ls_request_data-transportrequest ) ).
+*          zcl_abapgit_default_transport=>get_instance( )->set( CONV #( ls_request_data-transportrequest ) ).
         ENDIF.
 
 *------ Create online repo
